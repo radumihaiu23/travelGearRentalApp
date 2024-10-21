@@ -1,6 +1,6 @@
 package com.itschool.travelGearRentalApp.controllers;
 
-import com.itschool.travelGearRentalApp.models.dtos.ItemDTO;
+import com.itschool.travelGearRentalApp.models.dtos.PostItemDTO;
 import com.itschool.travelGearRentalApp.services.ItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class ItemController {
     }
 
     @PostMapping("/api/items")
-    public ResponseEntity<ItemDTO> createItem(@RequestBody ItemDTO itemDTO) {
-        return ResponseEntity.ok(itemService.createItem(itemDTO));
+    public ResponseEntity<PostItemDTO> createItem(@RequestBody PostItemDTO postItemDTO) {
+        return ResponseEntity.ok(itemService.createItem(postItemDTO));
     }
 }

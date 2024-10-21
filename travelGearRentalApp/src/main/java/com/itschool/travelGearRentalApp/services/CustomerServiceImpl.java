@@ -1,7 +1,7 @@
 package com.itschool.travelGearRentalApp.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itschool.travelGearRentalApp.models.dtos.CustomerDTO;
+import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
 import com.itschool.travelGearRentalApp.models.entities.Customer;
 import com.itschool.travelGearRentalApp.repositories.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +20,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        Customer customerEntity = objectMapper.convertValue(customerDTO, Customer.class);
+    public PostCustomerDTO createCustomer(PostCustomerDTO postCustomerDTO) {
+        Customer customerEntity = objectMapper.convertValue(postCustomerDTO, Customer.class);
         Customer customerEntityResponse = customerRepository.save(customerEntity);
         log.info(" Customer with id {} was saved in database ", customerEntityResponse.getID());
         return null;
     }
+
 }

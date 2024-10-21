@@ -1,8 +1,8 @@
 package com.itschool.travelGearRentalApp.services;
 
-import com.itschool.travelGearRentalApp.models.dtos.CustomerDTO;
+import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
 
 public interface CustomerService {
 
-    CustomerDTO createCustomer(CustomerDTO customerDTO);
+    PostCustomerDTO createCustomer(PostCustomerDTO postCustomerDTO);
 }

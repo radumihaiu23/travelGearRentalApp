@@ -1,13 +1,12 @@
 package com.itschool.travelGearRentalApp.models.dtos;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class ItemDTO {
+public class PostItemDTO {
 
     private Long ID;
     private String itemName;

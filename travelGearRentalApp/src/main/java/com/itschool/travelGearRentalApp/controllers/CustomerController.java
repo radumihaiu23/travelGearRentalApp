@@ -1,6 +1,6 @@
 package com.itschool.travelGearRentalApp.controllers;
 
-import com.itschool.travelGearRentalApp.models.dtos.CustomerDTO;
+import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
 import com.itschool.travelGearRentalApp.services.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class CustomerController {
     }
 
     @PostMapping("/api/customers")
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        return ResponseEntity.ok(customerService.createCustomer(customerDTO));
+    public ResponseEntity<PostCustomerDTO> createCustomer(@RequestBody PostCustomerDTO postCustomerDTO) {
+        return ResponseEntity.ok(customerService.createCustomer(postCustomerDTO));
     }
 }

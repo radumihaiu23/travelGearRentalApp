@@ -1,8 +1,8 @@
 package com.itschool.travelGearRentalApp.services;
 
-import com.itschool.travelGearRentalApp.models.dtos.ItemDTO;
+import com.itschool.travelGearRentalApp.models.dtos.PostItemDTO;
 
 public interface ItemService {
 
-    ItemDTO createItem(ItemDTO itemDTO);
+    PostItemDTO createItem(PostItemDTO postItemDTO);
 }
