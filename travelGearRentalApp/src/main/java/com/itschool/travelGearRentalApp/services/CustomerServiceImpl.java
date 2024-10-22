@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itschool.travelGearRentalApp.exceptions.CustomerNotFoundException;
 import com.itschool.travelGearRentalApp.models.dtos.PatchCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
+import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
 import com.itschool.travelGearRentalApp.models.entities.Customer;
 import com.itschool.travelGearRentalApp.repositories.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -31,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public PatchCustomerDTO updateCustomer(Long customerId, String firstNameUpdate, String lastNameUpdate, String emailUpdate) {
-        Customer customerEntityUpdate = customerRepository.findById(customerId).orElseThrow( () -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
+        Customer customerEntityUpdate = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
 
         customerEntityUpdate.setFirstName(firstNameUpdate);
         customerEntityUpdate.setLastName(lastNameUpdate);  // DOES NOT WORK
@@ -40,5 +44,21 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.info("Updated details for customer id { }", updatedCustomer.getID());
         return objectMapper.convertValue(updatedCustomer, PatchCustomerDTO.class);
+    }
+
+    @Override
+    public List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerGender) {
+        Specification<Customer> spec = Specification
+                .where(CustomerSpecification.firstNameContains(firstName))
+                .and(CustomerSpecification.lastNameContains(lastName))
+                .and(CustomerSpecification.emailContains(email))
+                .and(CustomerSpecification.customerGenderContains(customerGender));
+
+        List<Customer> filteredCustomers = customerRepository.findAll(spec);
+        log.info("{} customers were found", filteredCustomers.size());
+
+        return filteredCustomers.stream()
+                .map(customer -> objectMapper.convertValue(customer, ResponseCustomerDTO.class))
+                .toList();
     }
 }
