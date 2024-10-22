@@ -1,6 +1,8 @@
 package com.itschool.travelGearRentalApp.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itschool.travelGearRentalApp.exceptions.CustomerNotFoundException;
+import com.itschool.travelGearRentalApp.models.dtos.PatchCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
 import com.itschool.travelGearRentalApp.models.entities.Customer;
 import com.itschool.travelGearRentalApp.repositories.CustomerRepository;
@@ -24,7 +26,19 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerEntity = objectMapper.convertValue(postCustomerDTO, Customer.class);
         Customer customerEntityResponse = customerRepository.save(customerEntity);
         log.info(" Customer with id {} was saved in database ", customerEntityResponse.getID());
-        return null;
+        return objectMapper.convertValue(customerEntityResponse, PostCustomerDTO.class);
     }
 
+    @Override
+    public PatchCustomerDTO updateCustomer(Long customerId, String firstNameUpdate, String lastNameUpdate, String emailUpdate) {
+        Customer customerEntityUpdate = customerRepository.findById(customerId).orElseThrow( () -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
+
+        customerEntityUpdate.setFirstName(firstNameUpdate);
+        customerEntityUpdate.setLastName(lastNameUpdate);  // DOES NOT WORK
+        customerEntityUpdate.setEmail(emailUpdate);        //DOES NOT WORK
+        Customer updatedCustomer = customerRepository.save(customerEntityUpdate);
+
+        log.info("Updated details for customer id { }", updatedCustomer.getID());
+        return objectMapper.convertValue(updatedCustomer, PatchCustomerDTO.class);
+    }
 }
