@@ -2,14 +2,15 @@ package com.itschool.travelGearRentalApp.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itschool.travelGearRentalApp.exceptions.CustomerNotFoundException;
-import com.itschool.travelGearRentalApp.models.dtos.PatchCustomerDTO;
-import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
+import com.itschool.travelGearRentalApp.models.dtos.RequestCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
 import com.itschool.travelGearRentalApp.models.entities.Customer;
 import com.itschool.travelGearRentalApp.repositories.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -26,24 +27,25 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public PostCustomerDTO createCustomer(PostCustomerDTO postCustomerDTO) {
-        Customer customerEntity = objectMapper.convertValue(postCustomerDTO, Customer.class);
+    public RequestCustomerDTO createCustomer(RequestCustomerDTO requestCustomerDTO) {
+        Customer customerEntity = objectMapper.convertValue(requestCustomerDTO, Customer.class);
         Customer customerEntityResponse = customerRepository.save(customerEntity);
-        log.info(" Customer with id {} was saved in database ", customerEntityResponse.getID());
-        return objectMapper.convertValue(customerEntityResponse, PostCustomerDTO.class);
+        log.info("Customer with id {} was saved in database", customerEntityResponse.getId());
+        return objectMapper.convertValue(customerEntityResponse, RequestCustomerDTO.class);
     }
 
     @Override
-    public PatchCustomerDTO updateCustomer(Long customerId, String firstNameUpdate, String lastNameUpdate, String emailUpdate) {
-        Customer customerEntityUpdate = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
+    public RequestCustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody RequestCustomerDTO requestCustomerDTO) {
+        Customer customer= customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
 
-        customerEntityUpdate.setFirstName(firstNameUpdate);
-        customerEntityUpdate.setLastName(lastNameUpdate);  // DOES NOT WORK
-        customerEntityUpdate.setEmail(emailUpdate);        //DOES NOT WORK
-        Customer updatedCustomer = customerRepository.save(customerEntityUpdate);
+        customer.setFirstName(requestCustomerDTO.getFirstName());
+        customer.setLastName(requestCustomerDTO.getLastName());
+        customer.setEmail(requestCustomerDTO.getEmail());
+        customer.setCustomerGender(requestCustomerDTO.getCustomerGender());
 
-        log.info("Updated details for customer id { }", updatedCustomer.getID());
-        return objectMapper.convertValue(updatedCustomer, PatchCustomerDTO.class);
+        Customer updatedCustomer = customerRepository.save(customer);
+        log.info("Customer with id {} was updated",updatedCustomer.getId());
+        return objectMapper.convertValue(updatedCustomer, RequestCustomerDTO.class);
     }
 
     @Override

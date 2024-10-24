@@ -1,8 +1,8 @@
 package com.itschool.travelGearRentalApp.controllers;
 
-import com.itschool.travelGearRentalApp.models.dtos.PatchCustomerDTO;
-import com.itschool.travelGearRentalApp.models.dtos.PostCustomerDTO;
+import com.itschool.travelGearRentalApp.models.dtos.RequestCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
+import com.itschool.travelGearRentalApp.models.entities.Customer;
 import com.itschool.travelGearRentalApp.services.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,21 +20,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<PostCustomerDTO> createCustomer(@RequestBody PostCustomerDTO postCustomerDTO) {
-        return ResponseEntity.ok(customerService.createCustomer(postCustomerDTO));
+    public ResponseEntity<RequestCustomerDTO> createCustomer(@RequestBody RequestCustomerDTO requestCustomerDTO) {
+        return ResponseEntity.ok(customerService.createCustomer(requestCustomerDTO));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PatchCustomerDTO> updateCustomer(@PathVariable Long id,
-                                                           @RequestBody
-                                                           PatchCustomerDTO firstName,
-                                                           PatchCustomerDTO lastName,
-                                                           PatchCustomerDTO email) {
-        return ResponseEntity.ok(customerService.updateCustomer(
-                id,
-                firstName.getFirstName(),
-                lastName.getLastName(),
-                email.getEmail()));
+    public ResponseEntity<RequestCustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody RequestCustomerDTO requestCustomerDTO) {
+        return ResponseEntity.ok(customerService.updateCustomer(id, requestCustomerDTO));
     }
 
     @GetMapping
