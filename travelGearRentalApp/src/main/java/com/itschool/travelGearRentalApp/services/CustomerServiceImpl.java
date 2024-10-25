@@ -1,6 +1,9 @@
 package com.itschool.travelGearRentalApp.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itschool.travelGearRentalApp.exceptions.CustomerEmailAlreadyExistsException;
+import com.itschool.travelGearRentalApp.exceptions.CustomerFirstNameAlreadyExistsException;
+import com.itschool.travelGearRentalApp.exceptions.CustomerLastNameAlreadyExistsException;
 import com.itschool.travelGearRentalApp.exceptions.CustomerNotFoundException;
 import com.itschool.travelGearRentalApp.models.dtos.RequestCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
@@ -28,9 +31,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public RequestCustomerDTO createCustomer(RequestCustomerDTO requestCustomerDTO) {
+        validateCustomerEmail(requestCustomerDTO);
+        validateCustomerFirstName(requestCustomerDTO);
+        validateCustomerLastName(requestCustomerDTO);
+
         Customer customerEntity = objectMapper.convertValue(requestCustomerDTO, Customer.class);
         Customer customerEntityResponse = customerRepository.save(customerEntity);
         log.info("Customer with id {} was saved in database", customerEntityResponse.getId());
+
         return objectMapper.convertValue(customerEntityResponse, RequestCustomerDTO.class);
     }
 
@@ -65,9 +73,44 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomerData(Long id) {
-        customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer id: " + id + " cannot be found in database"));
-        customerRepository.deleteById(id);
-        log.info("All data for customer id: {} was deleted", id);
+    public void deleteCustomerData(Long customerId) {
+        customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer id: " + customerId + " cannot be found in database"));
+        customerRepository.deleteById(customerId);
+        log.info("All data for customer id: {} was deleted", customerId);
     }
+
+//    @Override
+//    public void deleteAllCustomerData() {
+//        customerRepository.exists()
+//        customerRepository.deleteAll();
+//        log.info("All Customer database was deleted");
+//
+//    }
+
+    public void validateCustomerEmail(RequestCustomerDTO requestCustomerDTO) {
+        Customer customer = customerRepository.findByEmail(requestCustomerDTO.getEmail());
+        if (customer != null) {
+            throw new CustomerEmailAlreadyExistsException("Customer email already exists in database");
+        }
+    }
+
+    public void validateCustomerFirstName(RequestCustomerDTO requestCustomerDTO) {
+        Customer customer = customerRepository.findByFirstName(requestCustomerDTO.getFirstName());
+
+        if (customer != null) {
+            throw new CustomerFirstNameAlreadyExistsException("Customer firstName already exists in database");
+        }
+    }
+
+    public void validateCustomerLastName(RequestCustomerDTO requestCustomerDTO) {
+        Customer customer = customerRepository.findByLastName(requestCustomerDTO.getLastName());
+
+        if (customer != null) {
+            throw new CustomerLastNameAlreadyExistsException("Customer lastName already exists in database");
+        }
+    }
+
+
 }
+
+

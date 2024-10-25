@@ -3,6 +3,7 @@ package com.itschool.travelGearRentalApp.controllers;
 import com.itschool.travelGearRentalApp.models.dtos.RequestCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
 import com.itschool.travelGearRentalApp.services.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<RequestCustomerDTO> createCustomer(@RequestBody RequestCustomerDTO requestCustomerDTO) {
+    public ResponseEntity<RequestCustomerDTO> createCustomer(@Valid @RequestBody RequestCustomerDTO requestCustomerDTO) {
         return ResponseEntity.ok(customerService.createCustomer(requestCustomerDTO));
     }
 
@@ -42,4 +43,12 @@ public class CustomerController {
         customerService.deleteCustomerData(id);
         return ResponseEntity.noContent().build();
     }
+
+//    @DeleteMapping
+//    public ResponseEntity<Void> deleteAllCustomerData() {
+//        customerService.deleteAllCustomerData();
+//        return ResponseEntity.noContent().build();
+//    }
+
+
 }

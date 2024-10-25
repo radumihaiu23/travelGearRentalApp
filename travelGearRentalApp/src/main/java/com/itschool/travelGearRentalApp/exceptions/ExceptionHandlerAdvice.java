@@ -6,14 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Map;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FOUND;
 
 @Slf4j
 @ControllerAdvice
-public class ExceptionHandlerAdvice {
+public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
@@ -21,9 +23,24 @@ public class ExceptionHandlerAdvice {
         this.objectMapper = objectMapper;
     }
 
+    @ExceptionHandler(CustomerEmailAlreadyExistsException.class)
+    public ResponseEntity<String> customerEmailAlreadyExistsException(CustomerEmailAlreadyExistsException customerEmailAlreadyExistsException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", customerEmailAlreadyExistsException.getMessage())), FOUND);
+    }
+
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<String> customerNotFoundException(CustomerNotFoundException customerNotFoundException) {
         return new ResponseEntity<>(objectToString(Map.of("message", customerNotFoundException.getMessage())), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomerFirstNameAlreadyExistsException.class)
+    public ResponseEntity<String> customerFirstNameAlreadyExistsException(CustomerFirstNameAlreadyExistsException customerFirstNameAlreadyExistsException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", customerFirstNameAlreadyExistsException.getMessage())), FOUND);
+    }
+
+    @ExceptionHandler(CustomerLastNameAlreadyExistsException.class)
+    public ResponseEntity<String> customerLastNameAlreadyExistsException(CustomerLastNameAlreadyExistsException customerLastNameAlreadyExistsException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", customerLastNameAlreadyExistsException.getMessage())), FOUND);
     }
 
     private String objectToString(Object response) {
