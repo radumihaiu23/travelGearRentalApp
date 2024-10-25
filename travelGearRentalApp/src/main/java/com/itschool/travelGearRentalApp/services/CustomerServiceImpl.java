@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public RequestCustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody RequestCustomerDTO requestCustomerDTO) {
-        Customer customer= customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
 
         customer.setFirstName(requestCustomerDTO.getFirstName());
         customer.setLastName(requestCustomerDTO.getLastName());
@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCustomerGender(requestCustomerDTO.getCustomerGender());
 
         Customer updatedCustomer = customerRepository.save(customer);
-        log.info("Customer with id {} was updated",updatedCustomer.getId());
+        log.info("Customer with id {} was updated", updatedCustomer.getId());
         return objectMapper.convertValue(updatedCustomer, RequestCustomerDTO.class);
     }
 
@@ -62,5 +62,12 @@ public class CustomerServiceImpl implements CustomerService {
         return filteredCustomers.stream()
                 .map(customer -> objectMapper.convertValue(customer, ResponseCustomerDTO.class))
                 .toList();
+    }
+
+    @Override
+    public void deleteCustomerData(Long id) {
+        customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer id: " + id + " cannot be found in database"));
+        customerRepository.deleteById(id);
+        log.info("All data for customer id: {} was deleted", id);
     }
 }

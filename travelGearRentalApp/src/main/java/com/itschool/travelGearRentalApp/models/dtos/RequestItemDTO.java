@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class PostItemDTO {
+public class RequestItemDTO {
 
     private Long ID;
     private String itemName;

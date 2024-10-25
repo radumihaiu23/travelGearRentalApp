@@ -14,18 +14,18 @@ public class Customer {
     @GeneratedValue( strategy = GenerationType.IDENTITY) // the primary key will be automatically created by the database
     private Long id;
 
-    @Column(name = "firstName")
+    @Column(name = "first_Name")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_Name")
     private String lastName;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "customerCode")
+    @Column(name = "customer_Code")
     private UUID customerCode;
 
-    @Column(name = "customerGender")
+    @Column(name = "customer_Gender")
     private String customerGender;
 }
