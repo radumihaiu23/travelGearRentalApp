@@ -10,8 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @ControllerAdvice
@@ -41,6 +40,10 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomerLastNameAlreadyExistsException.class)
     public ResponseEntity<String> customerLastNameAlreadyExistsException(CustomerLastNameAlreadyExistsException customerLastNameAlreadyExistsException) {
         return new ResponseEntity<>(objectToString(Map.of("message", customerLastNameAlreadyExistsException.getMessage())), FOUND);
+    }
+    @ExceptionHandler(CustomerDatabaseIsEmpty.class)
+    public ResponseEntity<String> customerDatabaseIsEmpty(CustomerDatabaseIsEmpty customerDatabaseIsEmpty) {
+        return new ResponseEntity<>(objectToString(Map.of("message", customerDatabaseIsEmpty.getMessage())), NO_CONTENT);
     }
 
     private String objectToString(Object response) {

@@ -1,10 +1,7 @@
 package com.itschool.travelGearRentalApp.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itschool.travelGearRentalApp.exceptions.CustomerEmailAlreadyExistsException;
-import com.itschool.travelGearRentalApp.exceptions.CustomerFirstNameAlreadyExistsException;
-import com.itschool.travelGearRentalApp.exceptions.CustomerLastNameAlreadyExistsException;
-import com.itschool.travelGearRentalApp.exceptions.CustomerNotFoundException;
+import com.itschool.travelGearRentalApp.exceptions.*;
 import com.itschool.travelGearRentalApp.models.dtos.RequestCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
 import com.itschool.travelGearRentalApp.models.entities.Customer;
@@ -79,13 +76,11 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("All data for customer id: {} was deleted", customerId);
     }
 
-//    @Override
-//    public void deleteAllCustomerData() {
-//        customerRepository.exists()
-//        customerRepository.deleteAll();
-//        log.info("All Customer database was deleted");
-//
-//    }
+    @Override
+    public void deleteAllCustomerData() {
+        customerRepository.deleteAll();
+        log.info("All Customer database was deleted");
+    }
 
     public void validateCustomerEmail(RequestCustomerDTO requestCustomerDTO) {
         Customer customer = customerRepository.findByEmail(requestCustomerDTO.getEmail());

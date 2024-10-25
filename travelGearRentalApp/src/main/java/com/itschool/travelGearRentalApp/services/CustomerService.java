@@ -15,7 +15,7 @@ public interface CustomerService {
 
     void deleteCustomerData (Long id);
 
-//    void deleteAllCustomerData();
+    void deleteAllCustomerData();
 
 
 }

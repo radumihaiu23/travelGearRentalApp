@@ -44,11 +44,11 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
-//    @DeleteMapping
-//    public ResponseEntity<Void> deleteAllCustomerData() {
-//        customerService.deleteAllCustomerData();
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllCustomerData() {
+        customerService.deleteAllCustomerData();
+        return ResponseEntity.noContent().build();
+    }
 
 
 }
