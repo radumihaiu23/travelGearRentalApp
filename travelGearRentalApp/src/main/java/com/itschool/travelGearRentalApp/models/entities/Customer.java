@@ -10,8 +10,8 @@ import java.util.UUID;
 @Table(name = "customers")      // give custom name to table in database
 public class Customer {
 
-    @Id                                                  // marks a field of an entity as the primary key in the database table
-    @GeneratedValue( strategy = GenerationType.IDENTITY) // the primary key will be automatically created by the database
+    @Id                                                 // marks a field of an entity as the primary key in the database table
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // the primary key will be automatically created by the database
     private Long id;
 
     @Column(name = "first_Name")

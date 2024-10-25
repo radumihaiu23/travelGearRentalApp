@@ -41,10 +41,12 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> customerLastNameAlreadyExistsException(CustomerLastNameAlreadyExistsException customerLastNameAlreadyExistsException) {
         return new ResponseEntity<>(objectToString(Map.of("message", customerLastNameAlreadyExistsException.getMessage())), FOUND);
     }
+
     @ExceptionHandler(CustomerDatabaseIsEmpty.class)
     public ResponseEntity<String> customerDatabaseIsEmpty(CustomerDatabaseIsEmpty customerDatabaseIsEmpty) {
         return new ResponseEntity<>(objectToString(Map.of("message", customerDatabaseIsEmpty.getMessage())), NO_CONTENT);
     }
+
 
     private String objectToString(Object response) {
         try {

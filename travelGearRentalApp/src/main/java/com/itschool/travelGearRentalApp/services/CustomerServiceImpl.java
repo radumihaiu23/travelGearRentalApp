@@ -47,9 +47,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLastName(requestCustomerDTO.getLastName());
         customer.setEmail(requestCustomerDTO.getEmail());
         customer.setCustomerGender(requestCustomerDTO.getCustomerGender());
-
         Customer updatedCustomer = customerRepository.save(customer);
         log.info("Customer with id {} was updated", updatedCustomer.getId());
+
         return objectMapper.convertValue(updatedCustomer, RequestCustomerDTO.class);
     }
 
@@ -91,7 +91,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     public void validateCustomerFirstName(RequestCustomerDTO requestCustomerDTO) {
         Customer customer = customerRepository.findByFirstName(requestCustomerDTO.getFirstName());
-
         if (customer != null) {
             throw new CustomerFirstNameAlreadyExistsException("Customer firstName already exists in database");
         }
@@ -99,13 +98,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     public void validateCustomerLastName(RequestCustomerDTO requestCustomerDTO) {
         Customer customer = customerRepository.findByLastName(requestCustomerDTO.getLastName());
-
         if (customer != null) {
             throw new CustomerLastNameAlreadyExistsException("Customer lastName already exists in database");
         }
     }
-
-
 }
-
 

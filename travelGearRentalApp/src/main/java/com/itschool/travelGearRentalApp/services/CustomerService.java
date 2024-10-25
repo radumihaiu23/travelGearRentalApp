@@ -13,9 +13,7 @@ public interface CustomerService {
 
     List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerCode);
 
-    void deleteCustomerData (Long id);
+    void deleteCustomerData(Long id);
 
     void deleteAllCustomerData();
-
-
 }

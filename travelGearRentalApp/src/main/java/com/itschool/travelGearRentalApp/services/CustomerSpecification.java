@@ -35,9 +35,4 @@ public class CustomerSpecification {
         return (customer, query, criteriaBuilder) -> customerCode == null ? null :
                 criteriaBuilder.like(criteriaBuilder.lower(customer.get("customerCode")), "%" + customerCode.toLowerCase() + "%");
     }
-
-
-
-
-
 }

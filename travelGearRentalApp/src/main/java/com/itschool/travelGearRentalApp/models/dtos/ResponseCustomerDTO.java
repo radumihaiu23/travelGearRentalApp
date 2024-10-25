@@ -13,4 +13,4 @@ public class ResponseCustomerDTO {
     private String email;
     private UUID customerCode;
     private String customerGender;
-    }
+}
