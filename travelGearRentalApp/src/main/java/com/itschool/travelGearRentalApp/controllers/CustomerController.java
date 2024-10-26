@@ -24,11 +24,6 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.createCustomer(requestCustomerDTO));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<RequestCustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody RequestCustomerDTO requestCustomerDTO) {
-        return ResponseEntity.ok(customerService.updateCustomer(id, requestCustomerDTO));
-    }
-
     @GetMapping
     public ResponseEntity<List<ResponseCustomerDTO>> getCustomer(
             @RequestParam(value = "firstName", required = false) String firstName,
@@ -38,6 +33,12 @@ public class CustomerController {
             @RequestParam(value = "customerGender", required = false) String customerGender) {
         return ResponseEntity.ok(customerService.getCustomer(firstName, lastName, email, customerCode, customerGender));
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<RequestCustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody RequestCustomerDTO requestCustomerDTO) {
+        return ResponseEntity.ok(customerService.updateCustomer(id, requestCustomerDTO));
+    }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCustomerData(@PathVariable Long id) {

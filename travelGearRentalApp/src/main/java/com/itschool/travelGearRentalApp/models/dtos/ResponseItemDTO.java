@@ -12,6 +12,6 @@ public class ResponseItemDTO {
     private String itemName;
     private LocalDateTime dateOfRentedItem;
     private LocalDateTime dateOfReturnedItem;
-    private Boolean isRented;
+    private String isRented;
     private UUID itemCode;
 }

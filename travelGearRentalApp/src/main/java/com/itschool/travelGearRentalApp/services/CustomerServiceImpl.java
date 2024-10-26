@@ -68,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("{} customers were found", filteredCustomers.size());
 
         if ( filteredCustomers.isEmpty()){
-            throw new CustomerDatabaseIsEmpty("Customer database is empty"); // Exception code 204 is returned but the message not because the controller return is with no content
+            throw new CustomerDatabaseIsEmptyException("Customer database is empty"); // Exception code 204 is returned but the message not because the controller return is with no content
         }
 
         return filteredCustomers.stream()

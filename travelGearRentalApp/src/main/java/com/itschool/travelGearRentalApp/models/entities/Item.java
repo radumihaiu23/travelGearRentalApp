@@ -25,7 +25,7 @@ public class Item {
     private LocalDateTime dateOfReturnedItem;
 
     @Column(name = "is_rented")
-    private Boolean isRented;
+    private String isRented;
 
     @Column(name = "item_code")
     private UUID itemCode;

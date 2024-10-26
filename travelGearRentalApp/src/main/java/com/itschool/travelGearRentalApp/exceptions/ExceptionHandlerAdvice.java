@@ -42,14 +42,24 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(objectToString(Map.of("message", customerLastNameAlreadyExistsException.getMessage())), FOUND);
     }
 
-    @ExceptionHandler(CustomerDatabaseIsEmpty.class)
-    public ResponseEntity<String> customerDatabaseIsEmpty(CustomerDatabaseIsEmpty customerDatabaseIsEmpty) {
-        return new ResponseEntity<>(objectToString(Map.of("message", customerDatabaseIsEmpty.getMessage())), NO_CONTENT);
+    @ExceptionHandler(CustomerDatabaseIsEmptyException.class)
+    public ResponseEntity<String> customerDatabaseIsEmpty(CustomerDatabaseIsEmptyException customerDatabaseIsEmptyException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", customerDatabaseIsEmptyException.getMessage())), NO_CONTENT);
     }
 
     @ExceptionHandler(ItemNameAlreadyExistsException.class)
     public ResponseEntity<String> itemNameAlreadyExistsException(ItemNameAlreadyExistsException itemNameAlreadyExistsException) {
         return new ResponseEntity<>(objectToString(Map.of("message", itemNameAlreadyExistsException.getMessage())), FOUND);
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<String> itemNotFoundException(ItemNotFoundException itemNotFoundException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", itemNotFoundException.getMessage())), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ItemDatabaseIsEmptyException.class)
+    public ResponseEntity<String> itemNotFoundException(ItemDatabaseIsEmptyException itemDatabaseIsEmptyException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", itemDatabaseIsEmptyException.getMessage())), NO_CONTENT);
     }
 
 

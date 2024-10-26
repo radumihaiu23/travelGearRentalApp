@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
 
     Item findByItemName (String itemName);
+    Item findByIsRented (String isRented);
 }
