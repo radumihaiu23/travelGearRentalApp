@@ -11,7 +11,7 @@ public interface CustomerService {
 
     RequestCustomerDTO updateCustomer(Long customerId, RequestCustomerDTO requestCustomerDTO);
 
-    List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerCode);
+    List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerCode, String customerGender);
 
     void deleteCustomerData(Long id);
 

@@ -34,8 +34,9 @@ public class CustomerController {
             @RequestParam(value = "firstName", required = false) String firstName,
             @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "customerCode", required = false) String customerCode,
             @RequestParam(value = "customerGender", required = false) String customerGender) {
-        return ResponseEntity.ok(customerService.getCustomer(firstName, lastName, email, customerGender));
+        return ResponseEntity.ok(customerService.getCustomer(firstName, lastName, email, customerCode, customerGender));
     }
 
     @DeleteMapping("{id}")

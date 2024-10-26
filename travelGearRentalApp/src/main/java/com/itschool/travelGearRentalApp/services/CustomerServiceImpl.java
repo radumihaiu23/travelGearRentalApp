@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -33,6 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
         validateCustomerLastName(requestCustomerDTO);
 
         Customer customerEntity = objectMapper.convertValue(requestCustomerDTO, Customer.class);
+        customerEntity.setCustomerCode(UUID.randomUUID());
         Customer customerEntityResponse = customerRepository.save(customerEntity);
         log.info("Customer with id {} was saved in database", customerEntityResponse.getId());
 
@@ -54,19 +56,25 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerGender) {
+    public List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email,String customerCode, String customerGender) {
         Specification<Customer> spec = Specification
                 .where(CustomerSpecification.firstNameContains(firstName))
                 .and(CustomerSpecification.lastNameContains(lastName))
                 .and(CustomerSpecification.emailContains(email))
+                .and(CustomerSpecification.customerCodeContains(customerCode))
                 .and(CustomerSpecification.customerGenderContains(customerGender));
 
         List<Customer> filteredCustomers = customerRepository.findAll(spec);
         log.info("{} customers were found", filteredCustomers.size());
 
+        if ( filteredCustomers.isEmpty()){
+            throw new CustomerDatabaseIsEmpty("Customer database is empty"); // Exception code 204 is returned but the message not because the controller return is with no content
+        }
+
         return filteredCustomers.stream()
                 .map(customer -> objectMapper.convertValue(customer, ResponseCustomerDTO.class))
                 .toList();
+
     }
 
     @Override
@@ -79,7 +87,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteAllCustomerData() {
         customerRepository.deleteAll();
-        log.info("All Customer database was deleted");
+        log.info("Customer database is empty");
+
     }
 
     public void validateCustomerEmail(RequestCustomerDTO requestCustomerDTO) {
