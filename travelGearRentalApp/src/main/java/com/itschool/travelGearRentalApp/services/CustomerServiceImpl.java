@@ -28,17 +28,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public RequestCustomerDTO createCustomer(RequestCustomerDTO requestCustomerDTO) {
-        validateCustomerEmail(requestCustomerDTO);
-        validateCustomerFirstName(requestCustomerDTO);
-        validateCustomerLastName(requestCustomerDTO);
+    public ResponseCustomerDTO createCustomer(RequestCustomerDTO requestCustomerDTO) {
+        //validateCustomerEmail(requestCustomerDTO);
+        //validateCustomerFirstName(requestCustomerDTO);
+        //validateCustomerLastName(requestCustomerDTO);
 
         Customer customerEntity = objectMapper.convertValue(requestCustomerDTO, Customer.class);
-        customerEntity.setCustomerCode(UUID.randomUUID());
+        //customerEntity.setCustomerCode(UUID.randomUUID());
         Customer customerEntityResponse = customerRepository.save(customerEntity);
         log.info("Customer with id {} was saved in database", customerEntityResponse.getId());
 
-        return objectMapper.convertValue(customerEntityResponse, RequestCustomerDTO.class);
+        return objectMapper.convertValue(customerEntityResponse, ResponseCustomerDTO.class);
     }
 
     @Override
