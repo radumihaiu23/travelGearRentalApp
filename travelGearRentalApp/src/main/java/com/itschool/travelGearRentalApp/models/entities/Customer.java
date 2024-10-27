@@ -5,13 +5,13 @@ import lombok.Data;
 
 import java.util.UUID;
 
-@Data                           //generates getters and setters
-@Entity                         // class representation as a table stored in database
-@Table(name = "customers")      // give custom name to table in database
+@Data
+@Entity
+@Table(name = "customers")
 public class Customer {
 
-    @Id                                                 // marks a field of an entity as the primary key in the database table
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // the primary key will be automatically created by the database
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "first_Name")

@@ -36,13 +36,13 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerEntity = objectMapper.convertValue(requestCustomerDTO, Customer.class);
         customerEntity.setCustomerCode(UUID.randomUUID());
         Customer customerEntityResponse = customerRepository.save(customerEntity);
-        log.info("Customer with id {} was saved in database", customerEntityResponse.getId());
+        log.info("Customer id: {} was saved in database", customerEntityResponse.getId());
 
         return objectMapper.convertValue(customerEntityResponse, ResponseCustomerDTO.class);
     }
 
     @Override
-    public RequestCustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody RequestCustomerDTO requestCustomerDTO) {
+    public ResponseCustomerDTO updateCustomer(@PathVariable Long customerId, @RequestBody RequestCustomerDTO requestCustomerDTO) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + customerId + " not found"));
 
         customer.setFirstName(requestCustomerDTO.getFirstName());
@@ -50,9 +50,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEmail(requestCustomerDTO.getEmail());
         customer.setCustomerGender(requestCustomerDTO.getCustomerGender());
         Customer updatedCustomer = customerRepository.save(customer);
-        log.info("Customer with id {} was updated", updatedCustomer.getId());
+        log.info("Customer id: {} was updated", updatedCustomer.getId());
 
-        return objectMapper.convertValue(updatedCustomer, RequestCustomerDTO.class);
+        return objectMapper.convertValue(updatedCustomer, ResponseCustomerDTO.class);
     }
 
     @Override
@@ -65,10 +65,10 @@ public class CustomerServiceImpl implements CustomerService {
                 .and(CustomerSpecification.customerGenderContains(customerGender));
 
         List<Customer> filteredCustomers = customerRepository.findAll(spec);
-        log.info("{} customers were found", filteredCustomers.size());
+        log.info("{} customers found", filteredCustomers.size());
 
         if (filteredCustomers.isEmpty()) {
-            throw new CustomerDatabaseIsEmptyException("Customer database is empty"); // Exception code 204 is returned but the message not because the controller return is with no content
+            throw new CustomerDatabaseIsEmptyException("Customer database is empty");
         }
 
         return filteredCustomers.stream()
@@ -81,7 +81,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomerData(Long customerId) {
         customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer id: " + customerId + " cannot be found in database"));
         customerRepository.deleteById(customerId);
-        log.info("All data for customer id: {} was deleted", customerId);
+        log.info("All customer id: {} data was deleted", customerId);
     }
 
     @Override

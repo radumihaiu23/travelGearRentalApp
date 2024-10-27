@@ -48,6 +48,7 @@ public class PostMapping_createCustomer_test {
         expectedCustomerDTO.setCustomerGender("M");
 
         when(customerService.createCustomer(requestCustomerDTO)).thenReturn(expectedCustomerDTO);
+
         //when
         ResponseEntity<ResponseCustomerDTO> response = customerController.createCustomer(requestCustomerDTO);
 

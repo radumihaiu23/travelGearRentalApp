@@ -5,7 +5,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class CustomerSpecification {
 
-    //firstName, lastName, email, customerCode, customerGender
     public static Specification<Customer> firstNameContains(String firstName) {
         return (customer, query, criteriaBuilder) -> firstName == null ? null :
                 criteriaBuilder.like(criteriaBuilder.lower(customer.get("firstName")), "%" + firstName.toLowerCase() + "%");

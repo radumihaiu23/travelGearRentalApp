@@ -35,10 +35,9 @@ public class CustomerController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<RequestCustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody RequestCustomerDTO requestCustomerDTO) {
+    public ResponseEntity<ResponseCustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody RequestCustomerDTO requestCustomerDTO) {
         return ResponseEntity.ok(customerService.updateCustomer(id, requestCustomerDTO));
     }
-
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCustomerData(@PathVariable Long id) {

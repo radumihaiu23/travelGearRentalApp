@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
         }
         itemEntity.setItemCode(UUID.randomUUID());
         Item itemEntityResponse = itemRepository.save(itemEntity);
-        log.info(" Item with id {} was saved in database ", itemEntityResponse.getID());
+        log.info(" Item id: {} was saved in database ", itemEntityResponse.getID());
 
         return objectMapper.convertValue(itemEntityResponse, RequestItemDTO.class);
     }
@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
                 .and(ItemSpecification.itemCodeContains(itemCode));
 
         List<Item> filteredItems = itemRepository.findAll(spec);
-        log.info("{} customers were found", filteredItems.size());
+        log.info("{} customers found", filteredItems.size());
 
         if (filteredItems.isEmpty()) {
             throw new ItemDatabaseIsEmptyException("Customer database is empty");
@@ -68,9 +68,8 @@ public class ItemServiceImpl implements ItemService {
     public void deleteItemById(Long itemId) {
         itemRepository.findById(itemId).orElseThrow(() -> new ItemNotFoundException("Item: " + itemId + " cannot be found in database "));
         itemRepository.deleteById(itemId);
-        log.info("All data for item id: {} was deleted", itemId);
+        log.info("All item id: {} data was deleted", itemId);
     }
-
 
     public void validateItemName(RequestItemDTO requestItemDTO) {
         Item item = itemRepository.findByItemName(requestItemDTO.getItemName());

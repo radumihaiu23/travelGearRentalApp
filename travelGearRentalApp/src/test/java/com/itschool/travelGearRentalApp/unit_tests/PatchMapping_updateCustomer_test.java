@@ -33,29 +33,31 @@ public class PatchMapping_updateCustomer_test {
         RequestCustomerDTO requestCustomerDTO = new RequestCustomerDTO();
         requestCustomerDTO.setId(pathVariable);
         requestCustomerDTO.setFirstName("patch");
-        requestCustomerDTO.setLastName("test");
-        requestCustomerDTO.setEmail("patchtest@email.com");
+        requestCustomerDTO.setLastName("patch");
+        requestCustomerDTO.setEmail("patch@email.com");
         UUID uuid = UUID.randomUUID();
         requestCustomerDTO.setCustomerCode(uuid);
         System.out.println("patch test uuid is:" + uuid);
-        requestCustomerDTO.setCustomerGender("M");
+        requestCustomerDTO.setCustomerGender("patch");
 
-        RequestCustomerDTO expectedCustomerDTO = new RequestCustomerDTO();
+        ResponseCustomerDTO expectedCustomerDTO = new ResponseCustomerDTO();
         expectedCustomerDTO.setId(pathVariable);
-        expectedCustomerDTO.setFirstName("test");
-        expectedCustomerDTO.setLastName("test");
-        expectedCustomerDTO.setEmail("test@email.com");
+        expectedCustomerDTO.setFirstName("patch");
+        expectedCustomerDTO.setLastName("patch");
+        expectedCustomerDTO.setEmail("patch@email.com");
         expectedCustomerDTO.setCustomerCode(uuid);
-        System.out.println("test uuid is:" + uuid);
-        expectedCustomerDTO.setCustomerGender("M");
+        System.out.println("patch test uuid is:" + uuid);
+        expectedCustomerDTO.setCustomerGender("patch");
 
-        when(customerService.updateCustomer(pathVariable,requestCustomerDTO)).thenReturn(expectedCustomerDTO);
+        when(customerService.updateCustomer(pathVariable, requestCustomerDTO)).thenReturn(expectedCustomerDTO);
 
         //when
-        ResponseEntity<RequestCustomerDTO> response = customerController.updateCustomer(pathVariable, requestCustomerDTO);
+        ResponseEntity<ResponseCustomerDTO> response = customerController.updateCustomer(pathVariable, requestCustomerDTO);
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        System.out.println("expectedCustomer: " + expectedCustomerDTO);
+        System.out.println("response: " + response.getBody().toString());
         assertEquals(expectedCustomerDTO, response.getBody());
     }
 }

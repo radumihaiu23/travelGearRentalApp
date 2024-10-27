@@ -9,7 +9,7 @@ public interface CustomerService {
 
     ResponseCustomerDTO createCustomer(RequestCustomerDTO requestCustomerDTO);
 
-    RequestCustomerDTO updateCustomer(Long customerId, RequestCustomerDTO requestCustomerDTO);
+    ResponseCustomerDTO updateCustomer(Long customerId, RequestCustomerDTO requestCustomerDTO);
 
     List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerCode, String customerGender);
 

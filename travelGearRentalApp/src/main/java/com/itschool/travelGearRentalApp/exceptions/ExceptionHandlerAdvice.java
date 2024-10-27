@@ -62,10 +62,6 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(objectToString(Map.of("message", itemDatabaseIsEmptyException.getMessage())), NO_CONTENT);
     }
 
-
-
-
-
     private String objectToString(Object response) {
         try {
             return objectMapper.writeValueAsString(response);
