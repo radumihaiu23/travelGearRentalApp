@@ -1,44 +1,119 @@
-#Travel Gear Rental java project with Spring
+# Project name: Travel Gear Rental App
+<br/>
 
-You will find below the technical requirements for individual projects:
+### Project scope: using REST APIs to store customers and rented travel gear in a database
+<br/>
 
-1. The application should use the following tech stack:
-   Spring Boot
-   Java 17
-   Maven
-   PostgreSQL
-   H2 in-memory database
-   MockMVC (for integration tests)
-   JUnit (for unit tests)
-   Mockito (to mock dependencies for unit tests)
-   Hibernate as ORM (the default one provided by Spring)
+### Technologies used:
+   - Spring Boot - version: 3.3.4
+   - Java 17
+   - Maven
+   - PostgreSQL version 16.4-1
+   - H2 in-memory database
+   - MockMVC (for integration tests) - *to be added*
+   - JUnit (for unit tests)
+   - Mockito (to mock dependencies for unit tests)
+   - Hibernate as ORM (the default ORM provided by Spring)
 
-2. There should be at least four REST APIs: one for each CRUD operation.
+### Dependencies required (pom.xml): 
+*(dependencies were generated with Spring initializr)* 
+- spring-boot-starter-data-jpa
+- spring-boot-starter-validation
+- spring-boot-starter-web
+- spring-boot-starter-test
+- H2 Database SQL
+- PostgreSQL Driver
+- Lombok
 
-3. At least one API should have a more complex query behind it, for example, 
-   a GET API that retrieves data with more than one @RequestParam (as in the example below).
+### Other requirements:
+- pgAdmin4  version: 8.10
+- PostMan   version 11.18.0
 
-   @GetMapping
-   public ResponseEntity<List<User>> getUsers(@RequestParam("name") String name,
-   @RequestParam("city") String city,
-   @RequestParam("gender") String gender) {
-   // Logic to fetch users based on the provided criteria
-   }
+### Project setup:
+1. Clone project repository on local machine 
+2. Intall PostMan
+3. Install PostgreSQL
+4. Install pgAdmin4 
+5. Check resources:
+   --> application.properties should contain:
+         
+        |    spring.application.name=travelGearRentalApp
+        |    
+        |    # Database connection properties
+        |    spring.datasource.url=jdbc:postgresql://localhost:5432/travel_Gear_Rental_App
+        |    spring.datasource.username=developer
+        |    spring.datasource.password=developer
+        |   spring.datasource.driver-class-name=org.postgresql.Driver
+        |    
+        |    # JPA properties
+        |    spring.jpa.show-sql=true
+        |    spring.jpa.hibernate.ddl-auto=update
+        |    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+        |    
+        |    # Logging properties
+        |    logging.level.org.hibernate.SQL=DEBUG
+        |    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+    
+6. In pgAdmin -> PostgreSQL 16 -> create a new table with the following settings:
 
-4. Create a readme file of the project - this should include a description of the tech stack used, 
-   how the application can be started, and the core functionalities.
+       General -> Database: travel_Gear_Rental_App
+               -> Owner:    developer 
 
-5. Create integration and unit tests.
+7. Run the travelGearRentalApp in intelliJ 
+8. Use Postman to send REST API requests to endpoints
+<br/>
+<br/>
+<br/>
 
-6. Use try-catch blocks when needed and custom exceptions.
+### Examples of endpoins in Postman:
+**Customers endpoints examples:**
 
-7. There is no authentication or authorization required.
+            ------------------------------------------
+            POST: http://localhost:8080/api/customers -> creates a new customer 
+            body(raw JSON): 
+            {
+            "firstName": "customer",
+            "lastName": "customer",
+            "email": "customer@email.com",
+            "customerGender": "customer"
+            }
+            ------------------------------------------
+            PATCH:http://localhost:8080/api/customers/1 -> updates customer with id "1"
+            body(raw JSON):
+            {
+            "firstName": "update",
+            "lastName": "update",
+            "email": "update@email.com",
+            "customerGender": "update"
+            }
+            ------------------------------------------
+            GET:http://localhost:8080/api/customers - > get all customers (without params) or by params
+            Params:
+            Key:                Value:
+            firstName           customer
+            lastName            customer
+            email               customer@email.com
+            customerGender      customer
+            ------------------------------------------
+            DEL: http://localhost:8080/api/customers/1 -> deletes customer with id "1"
+            ------------------------------------------
+            DEL: http://localhost:8080/api/customers   -> deletes all customers in database
+            ------------------------------------------
+    
+ **Items endpoints examples:**
 
-8. If needed, you can use a SQL script to populate the database or you can create POST APIs for this.
-
-9. Validate data before saving it to the database (DTO validation and/or service layer validation). 
-   If the validation is not fulfilled, the API should return a proper message and HTTP status code to the user.
-
-10. Ensure that your application is free of compile errors, all tests pass successfully, and it has been thoroughly
-   tested with Postman. Don't forget to follow proper code formatting. We want to make sure everything works perfectly 
-   for the final demo.
+            ------------------------------------------
+            POST: http://localhost:8080/api/items      -> create new item 
+            body(raw JSON): 
+            {
+            "itemName": "item",
+            }
+            ------------------------------------------
+            DEL: http://localhost:8080/api/items/1    -> deletes item with id "1"
+            ------------------------------------------
+            GET: http://localhost:8080/api/items      -> get all items (without params) or by params
+            Params:
+            Key:                Value:
+            itemName           item
+            isRented           no                     -> default for isRented is "no"
+            ------------------------------------------
