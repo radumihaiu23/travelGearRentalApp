@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerControllerTest {
+public class PatchMapping_updateCustomer_test {
 
     @InjectMocks
     private CustomerController customerController;
@@ -28,18 +28,20 @@ public class CustomerControllerTest {
     @Test
     void testCreateCustomer() {
         //given
+        Long pathVariable = 23L;
+
         RequestCustomerDTO requestCustomerDTO = new RequestCustomerDTO();
-        requestCustomerDTO.setId(1L);
-        requestCustomerDTO.setFirstName("test");
+        requestCustomerDTO.setId(pathVariable);
+        requestCustomerDTO.setFirstName("patch");
         requestCustomerDTO.setLastName("test");
-        requestCustomerDTO.setEmail("test@email.com");
+        requestCustomerDTO.setEmail("patchtest@email.com");
         UUID uuid = UUID.randomUUID();
         requestCustomerDTO.setCustomerCode(uuid);
-        System.out.println("test uuid is:" + uuid);
+        System.out.println("patch test uuid is:" + uuid);
         requestCustomerDTO.setCustomerGender("M");
 
-        ResponseCustomerDTO expectedCustomerDTO = new ResponseCustomerDTO();
-        expectedCustomerDTO.setId(1L);
+        RequestCustomerDTO expectedCustomerDTO = new RequestCustomerDTO();
+        expectedCustomerDTO.setId(pathVariable);
         expectedCustomerDTO.setFirstName("test");
         expectedCustomerDTO.setLastName("test");
         expectedCustomerDTO.setEmail("test@email.com");
@@ -47,9 +49,10 @@ public class CustomerControllerTest {
         System.out.println("test uuid is:" + uuid);
         expectedCustomerDTO.setCustomerGender("M");
 
-        when(customerService.createCustomer(requestCustomerDTO)).thenReturn(expectedCustomerDTO);
+        when(customerService.updateCustomer(pathVariable,requestCustomerDTO)).thenReturn(expectedCustomerDTO);
+
         //when
-        ResponseEntity<ResponseCustomerDTO> response = customerController.createCustomer(requestCustomerDTO);
+        ResponseEntity<RequestCustomerDTO> response = customerController.updateCustomer(pathVariable, requestCustomerDTO);
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
