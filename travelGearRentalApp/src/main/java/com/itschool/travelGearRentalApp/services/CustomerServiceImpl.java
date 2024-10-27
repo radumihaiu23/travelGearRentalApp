@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -28,12 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ResponseCustomerDTO createCustomer(RequestCustomerDTO requestCustomerDTO) {
-        //validateCustomerEmail(requestCustomerDTO);
-        //validateCustomerFirstName(requestCustomerDTO);
-        //validateCustomerLastName(requestCustomerDTO);
+        validateCustomerEmail(requestCustomerDTO);
+        validateCustomerFirstName(requestCustomerDTO);
+        validateCustomerLastName(requestCustomerDTO);
 
         Customer customerEntity = objectMapper.convertValue(requestCustomerDTO, Customer.class);
-        //customerEntity.setCustomerCode(UUID.randomUUID());
+        customerEntity.setCustomerCode(UUID.randomUUID());
         Customer customerEntityResponse = customerRepository.save(customerEntity);
         log.info("Customer with id {} was saved in database", customerEntityResponse.getId());
 
@@ -55,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email,String customerCode, String customerGender) {
+    public List<ResponseCustomerDTO> getCustomer(String firstName, String lastName, String email, String customerCode, String customerGender) {
         Specification<Customer> spec = Specification
                 .where(CustomerSpecification.firstNameContains(firstName))
                 .and(CustomerSpecification.lastNameContains(lastName))
@@ -66,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> filteredCustomers = customerRepository.findAll(spec);
         log.info("{} customers were found", filteredCustomers.size());
 
-        if ( filteredCustomers.isEmpty()){
+        if (filteredCustomers.isEmpty()) {
             throw new CustomerDatabaseIsEmptyException("Customer database is empty"); // Exception code 204 is returned but the message not because the controller return is with no content
         }
 
@@ -111,4 +112,3 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 }
-

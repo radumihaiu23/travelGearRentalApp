@@ -34,7 +34,6 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getItem(itemName, dateOfRentedItem, dateOfReturnedItem, isRented, itemCode));
     }
 
-
     @DeleteMapping("{id}")
     public ResponseEntity<RequestItemDTO> deleteItemById(@PathVariable Long id) {
         itemService.deleteItemById(id);

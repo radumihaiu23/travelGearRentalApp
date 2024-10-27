@@ -34,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
         Item itemEntity = objectMapper.convertValue(requestItemDTO, Item.class);
         itemEntity.setDateOfRentedItem(LocalDateTime.now());
         if (itemEntity.getDateOfRentedItem() != null) {
-            itemEntity.setIsRented("not rented");
+            itemEntity.setIsRented("no");
         }
         itemEntity.setItemCode(UUID.randomUUID());
         Item itemEntityResponse = itemRepository.save(itemEntity);
@@ -78,5 +78,4 @@ public class ItemServiceImpl implements ItemService {
             throw new ItemNameAlreadyExistsException("This itemName already exists in database");
         }
     }
-
 }

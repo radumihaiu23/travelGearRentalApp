@@ -51,6 +51,4 @@ public class CustomerController {
         customerService.deleteAllCustomerData();
         return ResponseEntity.noContent().build();
     }
-
-
 }

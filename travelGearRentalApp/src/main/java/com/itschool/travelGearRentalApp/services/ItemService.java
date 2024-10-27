@@ -1,7 +1,6 @@
 package com.itschool.travelGearRentalApp.services;
 
 import com.itschool.travelGearRentalApp.models.dtos.RequestItemDTO;
-import com.itschool.travelGearRentalApp.models.dtos.ResponseCustomerDTO;
 import com.itschool.travelGearRentalApp.models.dtos.ResponseItemDTO;
 
 import java.util.List;

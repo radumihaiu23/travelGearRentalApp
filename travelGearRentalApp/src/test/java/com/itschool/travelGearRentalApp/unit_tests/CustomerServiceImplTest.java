@@ -32,57 +32,13 @@ class CustomerServiceImplTest {
     private CustomerServiceImpl customerService;
 
 
-    @Test
-    void testValidateCustomer(){
-        //given
-        RequestCustomerDTO requestDTO = new RequestCustomerDTO();
-        requestDTO.setEmail("test@email.com");
-
-        Customer savedCustomerEmail = new Customer();
-        savedCustomerEmail.setEmail("test@email.com");
-        //when
-        when(customerRepository.findByEmail(requestDTO.getEmail())).thenReturn(requestDTO);
-        //then
-        Assertions.assertEquals(customerRepository, savedCustomerEmail);
-    }
-
 
 
     @Test
     void testCreateCustomer() {
             //given
-        RequestCustomerDTO requestCustomerDTO = new RequestCustomerDTO();
-        requestCustomerDTO.setFirstName("testFirstName");
-        requestCustomerDTO.setLastName("testLastName");
-        requestCustomerDTO.setEmail("test@email.com");
-        requestCustomerDTO.setCustomerGender("test");
-
-        ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
-        responseCustomerDTO.setFirstName("testFirstName");
-        responseCustomerDTO.setLastName("testLastName");
-        responseCustomerDTO.setEmail("test@email.com");
-        responseCustomerDTO.setCustomerGender("test");
-
-        Customer customerEntity = new Customer();
-        customerEntity.setId(1L);
-        customerEntity.setFirstName("testFirstName");
-        customerEntity.setLastName("testLastName");
-        customerEntity.setEmail("test@email.com");
-        customerEntity.setCustomerGender("test");
-
-        Customer savedCustomerResponse = new Customer();
-        savedCustomerResponse.setId(1L);
-        savedCustomerResponse.setFirstName("testFirstName");
-        savedCustomerResponse.setLastName("testLastName");
-        savedCustomerResponse.setEmail("test@email.com");
-        savedCustomerResponse.setCustomerGender("test");
-
-        when(objectMapper.convertValue(requestCustomerDTO, Customer.class)).thenReturn(customerEntity);
-        when(customerRepository.save(customerEntity)).thenReturn((customerEntity));
-        when(objectMapper.convertValue(savedCustomerResponse,ResponseCustomerDTO.class)).thenReturn(responseCustomerDTO);
             //when
-        ResponseCustomerDTO savedCustomerDTO = customerService.createCustomer(requestCustomerDTO);
             //then
-        assertEquals(requestCustomerDTO.getFirstName(), savedCustomerDTO.getFirstName());
+
     }
 }

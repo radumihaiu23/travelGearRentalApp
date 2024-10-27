@@ -29,5 +29,4 @@ public class ItemSpecification {
         return (item, query, criteriaBuilder) -> itemCode == null ? null :
                 criteriaBuilder.like(criteriaBuilder.lower(item.get("itemCode")), "%" + itemCode.toLowerCase() + "%");
     }
-
 }
